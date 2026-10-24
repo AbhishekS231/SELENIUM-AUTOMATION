@@ -1,0 +1,43 @@
+<Configuration status="WARN">
+	<!-- Defining properties for base paths used in log file locations -->
+	<Properties>
+		<!-- Base directory for log files -->
+		<Property name="basePath">./logs</Property>
+	</Properties>
+
+	<!-- Configuring the appenders where log messages will be written -->
+	<Appenders>
+		<!-- Console Appender -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<!-- Defining the pattern layout for log messages in the console -->
+			<PatternLayout
+				pattern="[%d{HH:mm:ss.SSS}] [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+		<!-- Rolling File Appender -->
+		<RollingFile name="File"
+			fileName="${basePath}/automation.log"
+			filePattern="${basePath}/automation-%d{yyyy-MM-dd}.log">
+			<!-- Pattern layout for log messages written to files -->
+			<PatternLayout
+				pattern="[%d{HH:mm:ss.SSS}] [%t] %-5level %logger{36} - %msg%n" />
+
+			<!-- Policies for rolling over logs -->
+			<Policies>
+				<!-- Trigger rolling based on file size (5MB) -->
+				<SizeBasedTriggeringPolicy size="5MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+
+	<!-- Configuring loggers for defining log levels and attaching appenders -->
+	<Loggers>
+		<!-- Root Logger -->
+		<Root level="debug">
+			<!-- Attaching the console appender to root logger -->
+			<AppenderRef ref="Console" />
+			<!-- Attaching the rolling file appender to root logger -->
+			<AppenderRef ref="File" />
+		</Root>
+	</Loggers>
+</Configuration>
